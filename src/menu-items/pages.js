@@ -1,8 +1,11 @@
 // assets
-import { LoginOutlined, ProfileOutlined } from '@ant-design/icons';
+import { LoginOutlined, ProfileOutlined, DashboardOutlined, BarChartOutlined } from '@ant-design/icons';
+// assets
 
 // icons
 const icons = {
+  DashboardOutlined,
+  BarChartOutlined,
   LoginOutlined,
   ProfileOutlined
 };
@@ -14,6 +17,14 @@ const pages = {
   title: 'Pages',
   type: 'group',
   children: [
+    {
+      id: 'dashboard',
+      title: 'Dashboard',
+      type: 'item',
+      url: '/explorer',
+      icon: icons.DashboardOutlined,
+      breadcrumbs: false
+    },
     {
       id: 'documentations',
       title: 'Documentations',

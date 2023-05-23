@@ -1,9 +1,12 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { alpha } from '@mui/material/styles';
+import { BellOutlined } from '@ant-design/icons';
+import { Link as RouterLink } from 'react-router-dom';
 
 // material-ui
 import {
+  IconButton,
   Box,
   Link,
   Checkbox,
@@ -17,10 +20,13 @@ import {
   TableSortLabel,
   TablePagination,
   Typography,
+  Stack,
   LinearProgress
 } from '@mui/material';
 
-import { Link as RouterLink } from 'react-router-dom';
+// project import
+import Dot from 'components/@extended/Dot';
+import moment from 'moment';
 
 const headCells = [
   {
@@ -36,16 +42,16 @@ const headCells = [
     label: 'Time'
   },
   {
-    id: 'status',
+    id: 'confirmations',
     numeric: true,
     disablePadding: false,
-    label: 'Status'
+    label: 'confirmations'
   },
   {
     id: 'size',
     numeric: true,
     disablePadding: false,
-    label: 'Size (in byte)'
+    label: 'Size'
   },
 
   {
@@ -68,7 +74,7 @@ const headCells = [
   }
 ];
 
-function EnhancedTableHead() {
+function RecentTableHead() {
   return (
     <TableHead>
       <TableRow>
@@ -83,7 +89,43 @@ function EnhancedTableHead() {
   );
 }
 
-function EnhancedTableToolbar(props) {
+// ==============================|| ORDER TABLE - STATUS ||============================== //
+
+const OrderStatus = ({ status }) => {
+  let color;
+  let title;
+
+  switch (status) {
+    case 0:
+      color = 'warning';
+      title = 'Pending';
+      break;
+    case 1:
+      color = 'success';
+      title = 'Confirmed';
+      break;
+    case 2:
+      color = 'error';
+      title = 'Rejected';
+      break;
+    default:
+      color = 'primary';
+      title = 'None';
+  }
+
+  return (
+    <Stack direction="row" spacing={1} alignItems="center">
+      <Dot color={color} />
+      <Typography>{title}</Typography>
+    </Stack>
+  );
+};
+
+OrderStatus.propTypes = {
+  status: PropTypes.number
+};
+
+function RecentTableToolbar(props) {
   const { numSelected } = props;
 
   return (
@@ -98,6 +140,9 @@ function EnhancedTableToolbar(props) {
     >
       {numSelected > 0 ? (
         <Typography sx={{ flex: '1 1 100%' }} color="inherit" variant="subtitle1" component="div">
+          <IconButton aria-label="delete" size="small">
+            <BellOutlined />
+          </IconButton>
           Subscribe to {numSelected} selected Txn address
         </Typography>
       ) : (
@@ -109,11 +154,11 @@ function EnhancedTableToolbar(props) {
   );
 }
 
-EnhancedTableToolbar.propTypes = {
+RecentTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired
 };
 
-export default function EnhancedTable() {
+export default function RecentTable() {
   const [rows, setRows] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [rowCount, setRowCount] = React.useState(0);
@@ -159,15 +204,15 @@ export default function EnhancedTable() {
   return (
     <Box sx={{ width: '100%' }}>
       {loading && <LinearProgress />}
-      <EnhancedTableToolbar numSelected={selected.length} />
+      <RecentTableToolbar numSelected={selected.length} />
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'small'}>
-          <EnhancedTableHead numSelected={selected.length} rowCount={rowCount} />
+          <RecentTableHead numSelected={selected.length} rowCount={rowCount} />
           {rows.length > 1 && (
             <TableBody>
               {rows.map((row, index) => {
                 const isItemSelected = isSelected(row.hash);
-                const labelId = `enhanced-table-checkbox-${index}`;
+                const labelId = `Recent-table-checkbox-${index}`;
 
                 return (
                   <TableRow
@@ -195,14 +240,16 @@ export default function EnhancedTable() {
                       </Link>
                     </TableCell>
 
-                    <TableCell> {row.block_time}</TableCell>
-                    <TableCell> done</TableCell>
-                    <TableCell> {row.size}</TableCell>
+                    <TableCell> {moment.unix(row.block_time).fromNow()}</TableCell>
                     <TableCell>
-                      {row.inputs_value / 100000000} ({row.inputs_coun} input)
+                      <OrderStatus status={row.confirmations} />
+                    </TableCell>
+                    <TableCell> {row.size} byte</TableCell>
+                    <TableCell>
+                      {row.inputs_value / 100000000} ({row.inputs_count} inputs)
                     </TableCell>
                     <TableCell>
-                      {row.outputs_value / 100000000} ({row.outputs_count} input)
+                      {row.outputs_value / 100000000} ({row.outputs_count} outputs)
                     </TableCell>
                     <TableCell>{row.fee / 100000000}</TableCell>
                   </TableRow>

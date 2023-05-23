@@ -59,7 +59,7 @@ const areaChartOptions = {
 
 // ==============================|| REPORT AREA CHART ||============================== //
 
-const ReportAreaChart = () => {
+const SubscribePanel = () => {
   const theme = useTheme();
 
   const { primary, secondary } = theme.palette.text;
@@ -102,4 +102,4 @@ const ReportAreaChart = () => {
   return <ReactApexChart options={options} series={series} type="line" height={345} />;
 };
 
-export default ReportAreaChart;
+export default SubscribePanel;

@@ -74,7 +74,7 @@ const SubscribePanel = () => {
       xaxis: {
         labels: {
           style: {
-            colors: [secondary, secondary, secondary, secondary, secondary, secondary, secondary, secondary]
+            colors: [primary, secondary, secondary, secondary, secondary, secondary, secondary, secondary]
           }
         }
       },

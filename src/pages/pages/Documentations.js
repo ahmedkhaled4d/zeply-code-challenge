@@ -9,14 +9,11 @@ import MainCard from 'components/MainCard';
 const DocumentationsPage = () => (
   <MainCard>
     <Stack spacing={2}>
-      <Typography variant="body2">
-        challenge to build a simple app, using either ReactJS or React Native, which retrieves address and transaction information from the
-        BTC blockchain. It also allows a user to subscribe for changes to specific hashes. Each subscribed hash should generate a
-        notification on the UI. Furthermore, the user should be able to select in which currency the values should be displayed (USD, EUR or
-        BTC).
-      </Typography>
+      <Typography variant="body2">Tools and framwork which i used</Typography>
       <ul>
         <li>Framwork : React V18.2.0</li>
+        <li>MUI</li>
+        <li>Websocket</li>
       </ul>
     </Stack>
   </MainCard>

@@ -8,10 +8,10 @@ const axiosChainApi = axios.create({
 axiosChainApi.interceptors.request.use(
   async function (config) {
     // // Do  before request is sent
-    // config.headers = {
-    //   ...config.headers,
-    //   Accept: 'application/json'
-    // };
+    config.headers = {
+      ...config.headers,
+      Accept: 'application/json'
+    };
     return config;
   },
   function (error) {
@@ -29,7 +29,6 @@ axiosChainApi.interceptors.response.use(
   },
   function (error) {
     window.alert('Network Error : /' + error.response.status);
-
     return Promise.reject(error);
   }
 );

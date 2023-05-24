@@ -7,11 +7,12 @@ import { Chip, Grid, Stack, Typography } from '@mui/material';
 import MainCard from 'components/MainCard';
 
 // assets
-import { RiseOutlined, FallOutlined } from '@ant-design/icons';
+import { RiseOutlined } from '@ant-design/icons';
+import { formatValueCurrency } from 'utils/formatValueCurrency';
 
 // ==============================|| STATISTICS - ECOMMERCE CARD  ||============================== //
 
-const OverViewCard = ({ color, title, count, percentage, isLoss }) => (
+const OverViewCard = ({ color, title, value, percentage, currency }) => (
   <MainCard contentSX={{ p: 2.25 }}>
     <Stack spacing={0.5}>
       <Typography variant="h6" color="textSecondary">
@@ -20,7 +21,7 @@ const OverViewCard = ({ color, title, count, percentage, isLoss }) => (
       <Grid container alignItems="center">
         <Grid item>
           <Typography variant="h4" color="inherit">
-            {count}
+            {formatValueCurrency(value, currency)}
           </Typography>
         </Grid>
         {percentage && (
@@ -30,8 +31,7 @@ const OverViewCard = ({ color, title, count, percentage, isLoss }) => (
               color={color}
               icon={
                 <>
-                  {!isLoss && <RiseOutlined style={{ fontSize: '0.75rem', color: 'inherit' }} />}
-                  {isLoss && <FallOutlined style={{ fontSize: '0.75rem', color: 'inherit' }} />}
+                  <RiseOutlined style={{ fontSize: '0.75rem', color: 'inherit' }} />
                 </>
               }
               label={`${percentage}%`}
@@ -48,9 +48,9 @@ const OverViewCard = ({ color, title, count, percentage, isLoss }) => (
 OverViewCard.propTypes = {
   color: PropTypes.string,
   title: PropTypes.string,
-  count: PropTypes.string,
+  value: PropTypes.number,
   percentage: PropTypes.number,
-  isLoss: PropTypes.bool
+  currency: PropTypes.string
 };
 
 OverViewCard.defaultProps = {

@@ -25,12 +25,7 @@ const pages = {
       icon: icons.DashboardOutlined,
       breadcrumbs: false
     },
-    {
-      id: 'settings',
-      title: 'Settings',
-      type: 'item',
-      url: '/settings'
-    },
+
     {
       id: 'documentations',
       title: 'Documentations',

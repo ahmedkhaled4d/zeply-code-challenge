@@ -7,12 +7,13 @@ import OverViewCard from 'components/cards/OverViewCard';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axiosChainApi from 'utils/axios/api';
+import { useSelector } from 'react-redux';
+import AccordionCard from 'components/cards/AccordionCard';
 
 // ==============================|| Address PAGE ||============================== //
 
-import AccordionCard from 'components/cards/AccordionCard';
-
 export default function AddressPage() {
+  const { currency } = useSelector((state) => state.currency);
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   let { id } = useParams();
@@ -20,9 +21,8 @@ export default function AddressPage() {
   useEffect(() => {
     setLoading(true);
     axiosChainApi
-      .get(`/rawaddr/${id}`)
+      .get(`/rawaddr/${id}&cors=true`)
       .then((response) => {
-        console.log(response.data);
         setData(response.data);
         setLoading(false);
       })
@@ -39,24 +39,26 @@ export default function AddressPage() {
             <OverViewCard
               color="success"
               title="Balance"
-              count={`${data.final_balance / 100000000} BTC`}
-              percentage={Number(data.total_received / data.total_sent).toFixed(2)}
+              currency={currency}
+              value={data.final_balance}
+              percentage={Number((data.total_received * data.total_sent).toFixed(2))}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3}>
-            <OverViewCard title="Total number of transactions" count={data.n_tx} />
+            <OverViewCard title="Total number of transactions" value={data.n_tx} />
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3}>
-            <OverViewCard title="Received" count={`${data.total_received / 100000000} BTC`} />
+            <OverViewCard currency="BTC" title="Received" value={data.total_received} />
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3}>
-            <OverViewCard title="Sent" count={`${data.total_sent / 100000000} BTC`} />
+            <OverViewCard currency="BTC" title="Sent" value={data.total_sent} />
           </Grid>
 
           {data.txs.map((row, index) => (
             <Grid key={index} item xs={12}>
               <AccordionCard
                 balance={row.balance}
+                currency="BTC"
                 time={row.time}
                 hash={row.hash}
                 fee={row.fee}

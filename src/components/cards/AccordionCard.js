@@ -5,13 +5,14 @@ import { AccordionDetails, Accordion, AccordionSummary, Chip, Grid, Stack, Typog
 
 // assets
 import { RiseOutlined, FallOutlined, CopyOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { formatValueCurrency } from 'utils/formatValueCurrency';
 
 // ==============================|| AccordionCard CARD  ||============================== //
 const copyHash = (hash) => {
   return hash;
 };
 
-const AccordionCard = ({ hash, balance, fee, weight, inputs, out, result, time }) => (
+const AccordionCard = ({ hash, balance, fee, inputs, out, result, time, currency }) => (
   <Accordion TransitionProps={{ unmountOnExit: true }}>
     <AccordionSummary expandIcon={<ArrowDownOutlined />} aria-controls={hash} id={hash}>
       <Stack direction="row" spacing={2}>
@@ -40,10 +41,8 @@ const AccordionCard = ({ hash, balance, fee, weight, inputs, out, result, time }
     </AccordionSummary>
     <AccordionDetails>
       <Stack spacing={2}>
-        <Typography variant="h2">- Balance {balance / 100000000} BTC</Typography>
-
-        <Typography variant="overline">- Fees {fee / 100000000} BTC</Typography>
-        <Typography>- weight {weight / 100000000} BTC</Typography>
+        <Typography variant="h2">- Balance {formatValueCurrency(balance, currency)}</Typography>
+        <Typography variant="overline">- Fees {formatValueCurrency(fee, currency)}</Typography>
         <Typography sx={{ color: 'text.secondary' }}>- {moment.unix(time).format('MMMM Do YYYY')}</Typography>
         <Grid container spacing={2}>
           <Grid item xs={6}>
@@ -51,7 +50,7 @@ const AccordionCard = ({ hash, balance, fee, weight, inputs, out, result, time }
             <ul>
               {inputs.map((input, index) => (
                 <li key={index}>
-                  {input.prev_out?.addr} -{input.prev_out?.value / 100000000} BTC
+                  {input.prev_out?.addr} - {formatValueCurrency(input.prev_out?.value, currency)}
                 </li>
               ))}
             </ul>
@@ -74,6 +73,7 @@ const AccordionCard = ({ hash, balance, fee, weight, inputs, out, result, time }
 
 AccordionCard.propTypes = {
   hash: PropTypes.string,
+  currency: PropTypes.string,
   balance: PropTypes.number,
   fee: PropTypes.number,
   weight: PropTypes.number,

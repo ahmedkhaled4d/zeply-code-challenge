@@ -22,15 +22,15 @@ const Search = () => {
   const handleSubmit = () => {
     console.log(text);
     setLoading(true);
+    const nav = isValidBTCAddress(text);
     if (isValidBTCAddress(text)) {
-      navigate(`/address/${text}`);
+      navigate(`/${nav}/${text}`);
       setError('');
       setText('');
-      setLoading(false);
     } else {
       setError(`invalid search for ${text}`);
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   return (

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import moment from 'moment';
 // material-ui
-import { AccordionDetails, Accordion, AccordionSummary, Chip, Grid, Stack, Typography } from '@mui/material';
+import { Link, AccordionDetails, Accordion, AccordionSummary, Chip, Grid, Stack, Typography } from '@mui/material';
 
 // assets
 import { RiseOutlined, FallOutlined, CopyOutlined, ArrowDownOutlined } from '@ant-design/icons';
@@ -9,7 +9,7 @@ import { formatValueCurrency } from 'utils/formatValueCurrency';
 
 // ==============================|| AccordionCard CARD  ||============================== //
 const copyHash = (hash) => {
-  return hash;
+  return navigator.clipboard.writeText(hash);
 };
 
 const AccordionCard = ({ hash, balance, fee, inputs, out, result, time, currency }) => (
@@ -20,7 +20,7 @@ const AccordionCard = ({ hash, balance, fee, inputs, out, result, time, currency
         <Typography>
           {hash.slice(0, 7)}....{hash.slice(55)}
         </Typography>
-        <Typography>{balance / 100000000} BTC</Typography>
+        {balance && <Typography>{formatValueCurrency(balance, currency)}</Typography>}
         <Typography>from {inputs.length} inputs </Typography>
         <Typography>To {out.length} outputs </Typography>
         <Chip
@@ -41,7 +41,7 @@ const AccordionCard = ({ hash, balance, fee, inputs, out, result, time, currency
     </AccordionSummary>
     <AccordionDetails>
       <Stack spacing={2}>
-        <Typography variant="h2">- Balance {formatValueCurrency(balance, currency)}</Typography>
+        {balance && <Typography variant="h2">- Balance {formatValueCurrency(balance, currency)}</Typography>}
         <Typography variant="overline">- Fees {formatValueCurrency(fee, currency)}</Typography>
         <Typography sx={{ color: 'text.secondary' }}>- {moment.unix(time).format('MMMM Do YYYY')}</Typography>
         <Grid container spacing={2}>
@@ -50,7 +50,8 @@ const AccordionCard = ({ hash, balance, fee, inputs, out, result, time, currency
             <ul>
               {inputs.map((input, index) => (
                 <li key={index}>
-                  {input.prev_out?.addr} - {formatValueCurrency(input.prev_out?.value, currency)}
+                  <Link href={`/address/${input.prev_out?.addr}`}>{input.prev_out?.addr}</Link>-{' '}
+                  {formatValueCurrency(input.prev_out?.value, currency)}
                 </li>
               ))}
             </ul>
@@ -60,7 +61,7 @@ const AccordionCard = ({ hash, balance, fee, inputs, out, result, time, currency
             <ul>
               {out.map((out, index) => (
                 <li key={index}>
-                  {out.addr} - {out.value / 100000000} BTC
+                  <Link href={`/address/${out.addr}`}>{out.addr}</Link>- {formatValueCurrency(out.value, currency)}
                 </li>
               ))}
             </ul>

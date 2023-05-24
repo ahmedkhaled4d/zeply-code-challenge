@@ -11,10 +11,9 @@ const TransactionExplorer = Loadable(lazy(() => import('pages/search/Transaction
 
 // render - pages
 const DocumentationsPage = Loadable(lazy(() => import('pages/pages/Documentations')));
-const DeveloperPage = Loadable(lazy(() => import('pages/pages/Developer')));
+const SettingsPage = Loadable(lazy(() => import('pages/pages/Settings')));
 
 // ==============================|| MAIN ROUTING ||============================== //
-
 const MainRoutes = {
   path: '/',
   element: <MainLayout />,
@@ -41,8 +40,8 @@ const MainRoutes = {
       element: <DocumentationsPage />
     },
     {
-      path: 'developer',
-      element: <DeveloperPage />
+      path: 'settings',
+      element: <SettingsPage />
     }
   ]
 };

@@ -26,18 +26,16 @@ const pages = {
       breadcrumbs: false
     },
     {
+      id: 'settings',
+      title: 'Settings',
+      type: 'item',
+      url: '/settings'
+    },
+    {
       id: 'documentations',
       title: 'Documentations',
       type: 'item',
-      url: '/docs',
-      icon: icons.ChromeOutlined
-    },
-    {
-      id: 'developer',
-      title: 'Developer',
-      type: 'item',
-      url: '/developer',
-      icon: icons.ChromeOutlined
+      url: '/docs'
     }
   ]
 };

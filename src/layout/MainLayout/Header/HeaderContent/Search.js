@@ -24,6 +24,9 @@ const Search = () => {
     setLoading(true);
     if (isValidBTCAddress(text)) {
       navigate(`/address/${text}`);
+      setError('');
+      setText('');
+      setLoading(false);
     } else {
       setError(`invalid search for ${text}`);
       setLoading(false);

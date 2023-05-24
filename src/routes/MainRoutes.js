@@ -5,7 +5,9 @@ import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
 
 // render - dashboard
-const DashboardExplorer = Loadable(lazy(() => import('pages/explore')));
+const IndexExplorer = Loadable(lazy(() => import('pages/explore')));
+const AddressPage = Loadable(lazy(() => import('pages/search/Address')));
+const TransactionExplorer = Loadable(lazy(() => import('pages/search/Transaction')));
 
 // render - pages
 const DocumentationsPage = Loadable(lazy(() => import('pages/pages/Documentations')));
@@ -19,12 +21,20 @@ const MainRoutes = {
   children: [
     {
       path: '/',
-      element: <DashboardExplorer />
+      element: <IndexExplorer />
     },
 
     {
       path: 'explorer',
-      element: <DashboardExplorer />
+      element: <IndexExplorer />
+    },
+    {
+      path: 'address/:id',
+      element: <AddressPage />
+    },
+    {
+      path: 'tnx/:hash',
+      element: <TransactionExplorer />
     },
     {
       path: 'docs',

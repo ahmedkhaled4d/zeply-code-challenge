@@ -1,20 +1,18 @@
 // material-ui
-import { Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
+import { useParams } from 'react-router-dom';
 
-// ==============================|| DocumentationsPage PAGE ||============================== //
+// ==============================|| Transaction PAGE ||============================== //
 
-const DocumentationsPage = () => (
-  <MainCard title="Sample Card">
-    <Typography variant="body2">
-      Lorem ipsum dolor sit amen, consenter nipissing eli, sed do elusion tempos incident ut laborers et doolie magna alissa. Ut enif ad
-      minim venice, quin nostrum exercitation illampu laborings nisi ut liquid ex ea commons construal. Duos aube grue dolor in reprehended
-      in voltage veil esse colum doolie eu fujian bulla parian. Exceptive sin ocean cuspidate non president, sunk in culpa qui officiate
-      descent molls anim id est labours.
-    </Typography>
-  </MainCard>
-);
+const TransactionPage = () => {
+  let { hash } = useParams();
+  return (
+    <MainCard title="Sample Card">
+      <h1>Tnx page {hash} </h1>
+    </MainCard>
+  );
+};
 
-export default DocumentationsPage;
+export default TransactionPage;

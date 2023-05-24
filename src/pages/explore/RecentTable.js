@@ -27,6 +27,7 @@ import {
 // project import
 import Dot from 'components/@extended/Dot';
 import moment from 'moment';
+import axiosChainApi from 'utils/axios/api';
 
 const headCells = [
   {
@@ -166,16 +167,14 @@ export default function RecentTable() {
   const [page, setPage] = React.useState(0);
 
   React.useEffect(() => {
-    setLoading(true);
-    const getLatestTransactions = async (page) =>
-      await fetch(`https://chain.api.btc.com/v3/block/latest/tx?page=${page + 1}`).then((data) => data.json());
-    getLatestTransactions(page)
-      .then((data) => {
-        setRows(data.data.list);
-        setRowCount(data.data.total_count);
-        setLoading(false);
-      })
-      .catch((e) => console.error(e));
+    async function fetchData() {
+      setLoading(true);
+      const response = await axiosChainApi.get(`/block/latest/tx?page=${page + 1}`);
+      setRows(response.data.list);
+      setRowCount(response.data.total_count);
+      setLoading(false);
+    }
+    fetchData();
   }, [page]);
 
   const handleClick = (event, name) => {
@@ -208,7 +207,7 @@ export default function RecentTable() {
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle" size={'small'}>
           <RecentTableHead numSelected={selected.length} rowCount={rowCount} />
-          {rows.length > 1 && (
+          {rows && (
             <TableBody>
               {rows.map((row, index) => {
                 const isItemSelected = isSelected(row.hash);

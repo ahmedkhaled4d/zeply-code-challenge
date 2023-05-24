@@ -2,7 +2,7 @@
 import { Grid, List, ListItemButton, ListItemText, Typography } from '@mui/material';
 
 // project import
-import RecentTable from './RecentTable';
+// import RecentTable from './RecentTable';
 import SubscribePanel from './SubscribePanel';
 
 import MainCard from 'components/MainCard';
@@ -15,7 +15,7 @@ const DashboardExplorer = () => {
       {/* row 1 Counters */}
       <Grid item xs={12} md={8} lg={9}>
         <MainCard sx={{ mt: 2 }} content={false}>
-          <RecentTable />
+          {/* <RecentTable /> */}
         </MainCard>
       </Grid>
       <Grid item xs={12} md={4} lg={3}>

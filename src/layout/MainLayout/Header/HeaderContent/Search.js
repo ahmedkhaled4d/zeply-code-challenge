@@ -4,6 +4,8 @@ import { Box, Typography, FormControl, InputAdornment, OutlinedInput, CircularPr
 // assets
 import { SearchOutlined } from '@ant-design/icons';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { isValidBTCAddress } from 'utils/isValidBTCAddress';
 
 // ==============================|| HEADER CONTENT - SEARCH ||============================== //
 
@@ -11,6 +13,7 @@ const Search = () => {
   const [text, setText] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -19,11 +22,12 @@ const Search = () => {
   const handleSubmit = () => {
     console.log(text);
     setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
+    if (isValidBTCAddress(text)) {
+      navigate(`/address/${text}`);
+    } else {
       setError(`invalid search for ${text}`);
-    }, 1000);
+      setLoading(false);
+    }
   };
 
   return (

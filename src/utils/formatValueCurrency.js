@@ -3,7 +3,7 @@
 
 // Function to validate the
 // BITCOIN Address
-export const formatValueCurrency = function (value, currency) {
+export const formatValueCurrency = function (value, currency = 'BTC') {
   let str = new Intl.NumberFormat('de-DE', { style: 'currency', currency });
   switch (currency) {
     case 'BTC':
@@ -18,6 +18,5 @@ export const formatValueCurrency = function (value, currency) {
     default:
       break;
   }
-
   return str.format(value);
 };

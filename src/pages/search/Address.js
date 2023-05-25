@@ -48,17 +48,17 @@ export default function AddressPage() {
             <OverViewCard title="Total number of transactions" value={data.n_tx} />
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3}>
-            <OverViewCard currency="BTC" title="Received" value={data.total_received} />
+            <OverViewCard currency={currency} title="Received" value={data.total_received} />
           </Grid>
           <Grid item xs={12} sm={6} md={4} lg={3}>
-            <OverViewCard currency="BTC" title="Sent" value={data.total_sent} />
+            <OverViewCard currency={currency} title="Sent" value={data.total_sent} />
           </Grid>
 
           {data.txs.map((row, index) => (
             <Grid key={index} item xs={12}>
               <AccordionCard
                 balance={row.balance}
-                currency="BTC"
+                currency={currency}
                 time={row.time}
                 hash={row.hash}
                 fee={row.fee}

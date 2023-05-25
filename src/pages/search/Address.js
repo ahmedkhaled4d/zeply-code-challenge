@@ -21,7 +21,7 @@ export default function AddressPage() {
   useEffect(() => {
     setLoading(true);
     axiosChainApi
-      .get(`/rawaddr/${id}&cors=true`)
+      .get(`/rawaddr/${id}`)
       .then((response) => {
         setData(response.data);
         setLoading(false);

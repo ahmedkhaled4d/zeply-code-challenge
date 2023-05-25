@@ -25,7 +25,7 @@ export default function TransactionPage() {
         setData(response.data);
         setLoading(false);
       })
-      .catch((e) => console.error(e));
+      .catch(() => setLoading(false));
   }, [hash]);
 
   return (
